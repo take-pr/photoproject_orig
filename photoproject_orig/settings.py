@@ -23,12 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-w824y7yls6xsjzo@fq8jh7x$#6936l&-+y@h_gln1nh$ei$rdo'
 
-# SECURITY WARNING: don't run with debug turned on in production! 
-#　'False'
-DEBUG = True
+# 本番環境では DEBUG を False に設定
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
-# 'photoproject-orig.onrender.com' '*'
-ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS に環境変数を利用
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "photoproject-orig.onrender.com").split(",")
 
 
 # Application definition
