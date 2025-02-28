@@ -1,0 +1,85 @@
+<!-- ベーステンプレートを適用する -->
+{% extends 'base3.html' %}
+<!-- 静的ファイルタグをロード -->
+{% load static %}
+
+<!-- ヘッダー情報のページタイトルを設定する -->
+{% block title %}Takehiro's Photo Blog{% endblock %}
+
+{% block contents %}
+
+<!-- タイトルテンプレートの組み込み -->
+{% include "photos_title3.html" %}
+
+<!-- 検索フォームを追加 -->
+<div class="container my-4">
+    <h2 class="mb-4 text-light">Search the Blog</h2>
+    <!-- スタイリッシュな検索フォーム -->
+    <form method="get" action="{% url 'photo2:search_results3' %}" class="stylish-search-form">
+        <input type="text" name="query" class="stylish-input" placeholder="キーワードを入力">
+        <button type="submit" class="stylish-button">検索</button>
+    </form>
+</div>
+
+<!-- スタイルを埋め込み -->
+<style>
+    /* スタイリッシュな検索フォーム全体のデザイン */
+    .stylish-search-form {
+        display: flex; /* フォーム要素を横並びに配置 */
+        justify-content: center; /* 水平方向中央寄せ */
+        align-items: center; /* 垂直方向中央寄せ */
+        gap: 10px; /* 入力フィールドとボタンの間隔 */
+        padding: 10px; /* 全体の余白 */
+        background: linear-gradient(145deg, rgba(0, 0, 0, 0.8), rgba(50, 50, 50, 0.6)); /* 背景のグラデーション */
+        border-radius: 12px; /* 角丸 */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* 高級感のある影 */
+    }
+
+    /* 入力フィールドのデザイン */
+    .stylish-input {
+        flex: 1; /* 入力フィールドを広げる */
+        padding: 10px; /* 内側の余白 */
+        font-size: 14px; /* フォントサイズ */
+        color: #ffffff; /* 文字色 */
+        background: rgba(255, 255, 255, 0.2); /* 背景の透明感 */
+        border: 1px solid rgba(255, 255, 255, 0.3); /* 半透明の枠線 */
+        border-radius: 8px; /* 角丸 */
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6); /* 内側の影 */
+        transition: all 0.3s ease; /* ホバー時のアニメーション */
+    }
+
+    /* 入力フィールドのホバー・フォーカス時のデザイン */
+    .stylish-input:hover,
+    .stylish-input:focus {
+        background: rgba(255, 255, 255, 0.3); /* 背景を明るく */
+        outline: none; /* デフォルトのアウトラインを削除 */
+        box-shadow: 0 0 8px rgba(255, 255, 255, 0.8); /* 明るい影 */
+    }
+
+    /* ボタンのデザイン */
+    .stylish-button {
+        padding: 10px 20px; /* ボタン内の余白 */
+        font-size: 14px; /* フォントサイズ */
+        color: #ffffff; /* 文字色 */
+        background: linear-gradient(145deg, #6c757d, #495057); /* ボタンのグラデーション */
+        border: none; /* 枠線を削除 */
+        border-radius: 8px; /* 角丸 */
+        cursor: pointer; /* カーソルを変更 */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* 高級感のある影 */
+        transition: all 0.3s ease; /* ホバー時のアニメーション */
+    }
+
+    /* ボタンのホバー時のデザイン */
+    .stylish-button:hover {
+        background: linear-gradient(145deg, #495057, #6c757d); /* グラデーションを反転 */
+        box-shadow: 0 6px 10px rgba(255, 255, 255, 0.3); /* 明るい影 */
+    }
+</style>
+
+<!-- 投稿一覧テンプレートの組み込み -->
+{% include "photos_list3.html" %}
+
+<!-- ページネーションの組み込み -->
+{% include "pagination3.html" %}
+
+{% endblock %}

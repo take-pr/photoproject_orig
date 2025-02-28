@@ -1,0 +1,103 @@
+<!-- ページネーションのアイコンを左右中央に配置 -->
+<ul class="pagination index-pagination"
+    style="justify-content:center">
+    <!--
+    前ページを表示するアイコンとリンクの設定
+    ページネーションされたPageオブジェクトをorderby_recordsで取得
+    Page.has_previous: 直前にページがある場合にTrueを返す
+    -->
+    {% if page_obj.has_previous %}
+    <!--
+    前のページが存在する場合はそのページへのリンクが設定されたアイコン[<<]を表示
+    Page.previous_page_number: 直前のページ番号を返す
+    -->
+    <li class="page-item">
+        <a class="page-link"
+             href="?page={{ page_obj.previous_page_number }}"
+             aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+    </li>
+    {% endif %}
+    <!--
+     すべてのページについてページ番号のアイコンを表示
+     paginator.page_range: [1, 2, 3, 4] のように1から始まるページ番号を返す
+     page_obj.paginator.page_rangeとして取得
+     ブロックパラメーターnumに順次取り出される
+    -->
+    {% for num in page_obj.paginator.page_range %}
+        <!--
+        各ページのアイコンを出力
+        Page.number: 引き渡されたページのページ番号を返す
+        -->
+        {% if page_obj.number == num %}
+        <!--
+        処理中のページ番号が引き渡されたページのページ番号と一致する場合は
+        ページ番号のアイコン(アクティブ状態)を表示(リンクは設定しない)
+        -->
+        <li class="page-item active">
+            <span class="page-link">{{ num }}</span>
+        </li>
+        <!--
+        ページ番号が引き渡されたページのページ番号と一致しない場合
+        -->
+        {% else %}
+        <!--
+        ページ番号のアイコン(アクティブ状態ではない)にリンクを設定して表示
+        -->
+        <li class="page-item">
+            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+        </li>
+        {% endif %}
+    {% endfor %}
+    <!--
+    次ページへのリンクを示すアイコンの表示
+    Page.has_next: 次のページがある場合にTrueを返す
+    -->
+    {% if page_obj.has_next %}
+    <!--
+    次ページが存在する場合はリンクを設定したアイコン［>>]を表示
+    Page.next_page_number: 次のページ番号を返す
+    -->
+    <li class="page-item">
+        <a class="page-link"
+           href="?page={{ page_obj.next_page_number }}"
+           aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+        </a>
+    </li>
+    {% endif %}
+
+    <style>
+        /* ページネーション全体のスタイル */
+        .pagination.index-pagination .page-item .page-link {
+            background: none !important; /* 背景を削除 */
+            border: none !important; /* 枠線を削除 */
+            color: rgba(255, 255, 255, 0.8) !important; /* 少し透明感のある白 */
+            font-weight: bold !important; /* 太字で強調 */
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.6), 0 0 20px rgba(255, 255, 255, 0.4); /* 白い輝きの効果 */
+            transition: all 0.2s ease !important; /* アニメーション効果 */
+        }
+    
+        /* アクティブページのボタン */
+        .pagination.index-pagination .page-item.active .page-link {
+            color: #ffffff !important; /* 完全な白 */
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.7); /* より強い輝き */
+            font-size: 1.1rem !important; /* 少し大きくする */
+        }
+    
+        /* ホバー時のボタン */
+        .pagination.index-pagination .page-item .page-link:hover {
+            color: rgba(255, 255, 255, 1) !important; /* ホバー時に完全な白 */
+            text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 40px rgba(255, 255, 255, 0.8); /* 輝きを増す */
+            transform: scale(1.4) !important; /* 拡大して視覚的に目立たせる */
+        }
+    
+        /* ページネーションの余白調整 */
+        .pagination.index-pagination {
+            margin-top: 20px !important;
+            margin-bottom: 20px !important;
+            text-align: center; /* 中央揃え */
+        }
+    </style>
+</ul>

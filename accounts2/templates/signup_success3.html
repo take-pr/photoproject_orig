@@ -1,0 +1,88 @@
+<!-- 静的ファイルタグをロード -->
+{% load static %}
+<!-- ヘッダー情報のページタイトルを設定する -->
+{% block title %}{% endblock %}
+
+{% block contents %}
+<style>
+  /* ページ全体のリセットとフォント設定 */
+  body {
+    margin: 0;
+    padding: 0;
+    color: white;
+    overflow-x: hidden;
+  }
+
+  /* 背景動画のスタイル */
+  .background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+  }
+
+  /* メインコンテナのスタイル */
+  .form-container {
+    padding: 40px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 100px auto;
+    text-align: center;
+  }
+
+  /* 輝く見出し */
+  h3 {
+    font-size: 2em;
+    font-weight: bold;
+    background: linear-gradient(45deg, #ffffff, #e0e0e0);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: glow 1.5s infinite;
+  }
+
+  @keyframes glow {
+    0% {
+      text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 15px #ffffff;
+    }
+    50% {
+      text-shadow: 0 0 10px #f8f8f8, 0 0 20px #ffffff, 0 0 30px #ffffff;
+    }
+    100% {
+      text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 15px #ffffff;
+    }
+  }
+
+  /* リンクのスタイル */
+  a {
+    color: white;
+    text-decoration: underline; /* 下線を追加 */
+    font-weight: 1000; /* 少し太く設定 */
+    transition: color 0.3s ease;
+  }
+
+  a:hover {
+    color: #BBBBBB;
+  }
+</style>
+
+<!-- 背景動画 -->
+<video class="background-video" autoplay loop muted>
+  <source src="{% static 'assets/background2.mp4' %}" type="video/mp4">
+  <!-- 動画が再生できない場合の代替テキスト -->
+  Your browser does not support the video tag.
+</video>
+
+<!-- コンテンツ -->
+<div class="container">
+  <div class="form-container">
+    <h3>登録が完了しました</h3>
+    <p>
+      <a href="{% url 'accounts2:login3' %}">ログインはこちら</a>
+    </p>
+  </div>
+</div>
+{% endblock %}

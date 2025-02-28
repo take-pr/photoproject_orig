@@ -1,0 +1,139 @@
+<!-- ベーステンプレートを適用する-->
+{% extends 'base3.html' %}
+
+<!-- 静的ファイルタグをロード -->
+{% load static %}
+
+{% block title %}Mypage{% endblock %}
+
+{% block contents %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- メタデータ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Playfair+display&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesomeのCDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- 外部CSSファイル -->
+    <link rel="stylesheet" href="{% static 'css/index2.css' %}">
+    
+    <style>
+        /* 背景動画のスタイル */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* コンテンツの透明背景調整 */
+        .content-wrapper {
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 800px;
+            color: white;
+        }
+
+        /* 白く輝くテキスト */
+        .glowing-text {
+            font-size: 1.5rem;
+            color: white;
+            text-shadow: 
+                0 0 5px rgba(255, 255, 255, 0.8), 
+                0 0 10px rgba(255, 255, 255, 0.6), 
+                0 0 15px rgba(255, 255, 255, 0.4);
+        }
+
+        /* ボタンスタイル */
+        .glowing-button {
+            font-size: 1.3rem;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        /* ボタンホバー時のスタイル */
+        .glowing-button:hover {
+            transform: scale(1.1);
+            color: white;
+            text-shadow: 
+                0 0 10px rgba(255, 255, 255, 1), 
+                0 0 20px rgba(255, 255, 255, 0.8), 
+                0 0 30px rgba(255, 255, 255, 0.6);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 背景動画 -->
+    <video autoplay loop muted playsinline class="video-background">
+        <source src="{% static 'assets/background2.mp4' %}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- ユーザーの投稿件数を表示 -->
+    {% if user.is_authenticated %}
+    <br>
+    <div style="text-align:center">
+        <h2 class="large-glowing-text">{{ user.username }}'s My Page</h2>
+        {% if object_list.count == 0 %}
+            <!-- 通常文字サイズ -->
+            <p class="normal-glowing-text">{{ user.username }} has no posts</p>
+        {% else %}
+            <!-- 通常文字サイズ -->
+            <p class="normal-glowing-text">Posts: <strong>{{ object_list.count }}</strong></p>
+        {% endif %}
+        <!-- 通常文字サイズのボタン -->
+        <a href="{% url 'photo2:post3' %}" class="glowing-button normal-glowing-text">
+            <i class="fas fa-plus"></i> Create Post
+        </a>
+    </div>
+    {% endif %}
+
+    <style>
+        /* 大きいテキスト */
+        .large-glowing-text {
+            font-size: 2.5rem; /* 大きな文字サイズ */
+            color: white;
+            text-shadow: 
+                0 0 5px rgba(255, 255, 255, 0.8), 
+                0 0 10px rgba(255, 255, 255, 0.6), 
+                0 0 15px rgba(255, 255, 255, 0.4);
+        }
+    
+        /* 通常のテキスト */
+        .normal-glowing-text {
+            font-size: 1.5rem; /* 通常の文字サイズ */
+            color: white;
+            text-shadow: 
+                0 0 5px rgba(255, 255, 255, 0.8), 
+                0 0 10px rgba(255, 255, 255, 0.6), 
+                0 0 15px rgba(255, 255, 255, 0.4);
+        }
+    </style>
+
+    <!-- 投稿一覧テンプレートの組み込み -->
+    <div class="content-wrapper">
+        {% include "photos_list3.html" %}
+    </div>
+
+    <!-- ページネーションの組み込み -->
+    <div>
+        {% include "pagination3.html" %}
+    </div>
+</body>
+</html>
+{% endblock %}

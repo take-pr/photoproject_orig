@@ -1,0 +1,156 @@
+{% load static %}
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>Log in</title>
+
+    <!-- ファビコン -->
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
+
+    <style>
+      /* 背景の設定 */
+      .video-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        object-fit: cover;
+      }
+
+      body {
+        color: white;
+        text-shadow: 1px 1px 2px black, 0 0 25px rgba(255, 255, 255, 0.7);
+        background: rgba(0, 0, 0, 0.6); /* 背景の透明度を調整 */
+        font-family: 'Helvetica Neue', sans-serif;
+        height: 100vh; /* ビューポート全体の高さ */
+        display: flex;
+        justify-content: center;
+        align-items: center; /* フォームを縦横中央に配置 */
+        margin: 0;
+      }
+
+      .form-signin {
+        position: relative;
+        z-index: 1;
+        background: rgba(0, 0, 0, 0.2); /* 背景の透明度を調整 */
+        padding: 15px 30px; /* パディングを縮めて高さを短く */
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+        max-width: 350px;
+        margin: 0 auto;
+        text-align: center;
+        height: auto;
+        width: 100%;
+      }
+
+      .form-signin h1 {
+        color: #f8f9fa;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        font-size: 1.5rem; /* フォントサイズを小さめに */
+      }
+
+      .form-signin .form-control {
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        color: white;
+        padding: 12px;
+        font-size: 1rem; /* フォントサイズを少し小さく */
+        margin-bottom: 1rem; /* 入力欄間のスペースを調整 */
+        width: 100%;
+      }
+
+      .form-signin input[type="submit"] {
+        background: linear-gradient(to right, #f1c40f, #e67e22);
+        border: none;
+        border-radius: 10px;
+        padding: 14px 24px;
+        font-size: 1.1rem;
+        color: white;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+        transition: all 0.3s ease-in-out;
+      }
+
+      /* ホバー時のアニメーション */
+      .form-signin input[type="submit"]:hover {
+        background: linear-gradient(to right, #e67e22, #f1c40f);
+        transform: scale(1.1); /* ボタンを大きくする */
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* 影を強調 */
+      }
+
+      .form-signin p {
+        color: #ddd;
+        font-size: 1rem;
+      }
+
+      .form-signin a {
+        color: #f8f9fa;
+        text-decoration: none;
+      }
+
+      .form-signin a:hover {
+        text-decoration: underline;
+      }
+
+      .form-signin label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- 背景動画 -->
+    <video autoplay loop muted playsinline class="video-background">
+      <source src="{% static 'assets/background-post.mp4' %}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+    <!-- ログインフォーム -->
+    <main class="form-signin">
+      <!-- ユーザー名とパスワードが一致しない場合のメッセージ -->
+      {% if form.errors %}
+        <p style="color: red; font-weight: bold;">ユーザー名とパスワードが一致しません。</p>
+      {% endif %}
+
+      <!-- ログインフォーム -->
+      <form method="post">
+        {% csrf_token %}
+        <!-- ロゴ -->
+        <img class="mb-4" src="{% static 'img/bootstrap-logo2.svg' %}" alt="" width="72" height="57">
+
+        <h1 class="h3 mb-3 fw-normal">ログインしてください</h1>
+
+        <!-- ユーザー名入力欄 -->
+        <label for="Username" class="visually-hidden">ユーザー名</label>
+        <input type="text" name="username" id="id_username" maxlength="150" autocapitalize="none"
+               autocomplete="username" class="form-control" placeholder="ユーザー名" required autofocus>
+
+        <!-- パスワード入力欄 -->
+        <label for="Password" class="visually-hidden">パスワード</label>
+        <input type="password" name="password" id="id_password" autocomplete="current-password"
+               class="form-control" placeholder="パスワード" required>
+
+        <!-- ログインボタン -->
+        <input class="w-100 btn btn-lg btn-primary" type="submit" value="ログイン">
+
+        <!-- パスワードリセットページへのリンク -->
+        <br><br>
+        <p><a href="{% url 'password_reset3' %}">パスワードを忘れましたか?</a></p>
+
+        <!-- ログイン後にリダイレクトされるURL -->
+        <input type="hidden" name="next" value="{% url 'photo2:index3' %}">
+      </form>
+    </main>
+  </body>
+</html>

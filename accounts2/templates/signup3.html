@@ -1,0 +1,140 @@
+<!-- 静的ファイルタグをロード -->
+{% load static %}
+<!-- ヘッダー情報のページタイトルを設定する -->
+{% block title %}{% endblock %}
+
+{% block contents %}
+<style>
+  /* ページ全体のリセットとフォント設定 */
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    color: white; /* テキストを白に設定 */
+    overflow-x: hidden;
+  }
+
+  /* 背景動画のスタイル */
+  .background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw; /* 画面幅いっぱい */
+    height: 100vh; /* 画面高さいっぱい */
+    object-fit: cover; /* 動画を拡大してカバー */
+    z-index: -1; /* コンテンツの背面に配置 */
+  }
+
+  /* フォーム全体を囲む透明感のある背景 */
+  .form-container {
+    background: rgba(0, 0, 0, 0.2); /* 半透明の黒背景 */
+    padding: 30px; /* 内側の余白 */
+    border-radius: 10px; /* 角を丸く */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.22); /* ボックスシャドウで立体感 */
+    max-width: 600px; /* 最大幅を設定 */
+    margin: 50px auto; /* 上下に50pxのスペースを追加 */
+  }
+
+  /* 白く輝く文字エフェクト */
+  h3 {
+    text-align: center; /* 中央寄せ */
+    margin-bottom: 20px; /* 下に余白 */
+    font-size: 2em; /* サイズ調整 */
+    background: linear-gradient(45deg, #ffffff, #f0f0f0); /* 白のグラデーション */
+    background-clip: text; /* 背景を文字内に適用 */
+    -webkit-background-clip: text; /* Webkit対応 */
+    color: transparent; /* テキスト自体を透明化 */
+    animation: glow 1.5s infinite; /* アニメーション適用 */
+  }
+
+  @keyframes glow {
+    0% {
+      text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff;
+    }
+    50% {
+      text-shadow: 0 0 10px #f0f0f0, 0 0 20px #ffffff;
+    }
+    100% {
+      text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff;
+    }
+  }
+
+  /* グラデーションボタン */
+  input[type="submit"] {
+    background: linear-gradient(45deg, #ff7e5f, #feb47b); /* オレンジ系グラデーション */
+    color: white; /* ボタンテキストを白に設定 */
+    border: none; /* ボーダーなし */
+    padding: 10px 20px; /* ボタン内の余白 */
+    border-radius: 5px; /* 角を丸く */
+    cursor: pointer; /* マウスカーソルを指マークに */
+    transition: transform 0.3s ease, background 0.3s ease; /* スムーズなホバーアニメーション */
+  }
+
+  input[type="submit"]:hover {
+    transform: scale(1.1); /* サイズを1.1倍に */
+    background: linear-gradient(45deg, #feb47b, #ff7e5f); /* ホバーで色を変更 */
+  }
+
+  /* フォーム内の各項目 */
+  form p {
+    margin-bottom: 15px; /* 項目間の余白 */
+  }
+
+  /* リンクのスタイル */
+  a {
+    color: #ff7e5f; /* オレンジ色のリンク */
+    text-decoration: none; /* 下線を除去 */
+    transition: 0.3s; /* アニメーション */
+  }
+
+  a:hover {
+    color: #feb47b; /* ホバーで色を変更 */
+  }
+</style>
+
+<!-- 背景動画 -->
+<video class="background-video" autoplay loop muted>
+  <source src="{% static 'assets/background-post.mp4' %}" type="video/mp4">
+  <!-- 動画が再生できない場合の代替メッセージ -->
+  Your browser does not support the video tag.
+</video>
+
+<!-- コンテンツ -->
+<div class="container">
+  <!-- 半透明の背景ボックス -->
+  <div class="form-container">
+    <h3>アカウント登録</h3> <!-- 白く輝く見出し -->
+    <!-- サインアップフォーム -->
+    <form method="post">
+      {% csrf_token %}
+      <!-- フォームフィールドをループで表示 -->
+      {% for field in form %}
+      <p>
+        <!-- フィールドのラベル -->
+        {{ field.label_tag }}<br>
+        <!-- 入力欄 -->
+        {{ field }}
+        <!-- ヘルプテキストがある場合に表示 -->
+        {% if field.help_text %}
+        <small style="color: lightgrey;">{{ field.help_text }}</small>
+        {% endif %}
+        <!-- エラーメッセージを表示 -->
+        {% for error in field.errors %}
+        <p style="color: red;">{{ error }}</p>
+        {% endfor %}
+      </p>
+      {% endfor %}
+      <p style="color: lightcoral;">
+        ※メールアドレスはパスワードをリセットする際に必要です。
+      </p>
+      <!-- 送信ボタン -->
+      <input type="submit" value="Sign up">
+    </form>
+    <br>
+    <p style="text-align: center;">
+      <!-- トップページに戻るリンク -->
+      <a href="{% url 'photo2:index3' %}">登録をやめてトップページに戻る</a>
+    </p>
+  </div>
+</div>
+{% endblock %}
