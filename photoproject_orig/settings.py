@@ -23,11 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-w824y7yls6xsjzo@fq8jh7x$#6936l&-+y@h_gln1nh$ei$rdo'
 
-# 本番環境では DEBUG を False に設定
-DEBUG = os.getenv("DEBUG", "False") == "True"
+# True or False に設定
+DEBUG = False
 
-# ALLOWED_HOSTS に環境変数を利用
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "photoproject-orig.onrender.com").split(",")
+# ALLOWED_HOSTS = ["photoproject-orig.onrender.com"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # 追加
 ]
 
 ROOT_URLCONF = 'photoproject_orig.urls'
@@ -123,10 +124,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
-# staticフォルダーのフルパスを設定
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+# Collectstatic で静的ファイルを一箇所にまとめるための設定
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+# 開発環境用の静的ファイルディレクトリ
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
 # Userモデルの代わりにCustomUserモデルを使用する
 AUTH_USER_MODEL = 'accounts2.Custom2User'
